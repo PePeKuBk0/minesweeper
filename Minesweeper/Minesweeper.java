@@ -31,8 +31,9 @@ public class Minesweeper {
     JPanel textPanel = new JPanel();
     JPanel boardPanel = new JPanel();
     MineTile[][] board = new MineTile [pocetRiadkov][pocetStlpcov];
+    ArrayList<MineTile> mineList;
     Minesweeper(){
-        frame.setVisible(true);
+        // frame.setVisible(true);
         frame.setSize(sirkaPlatna, vyskaPlatna);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
@@ -59,9 +60,40 @@ public class Minesweeper {
                 tile.setFocusable(false);
                 tile.setMargin(new Insets(0,0,0,0));
                 tile.setFont(new Font("Ariel Unicode MS", Font.PLAIN, 45));
-                tile.setText("1");
+                // tile.setText("💣");
+                tile.addMouseListener(new MouseAdapter(){
+                @Override
+                public void mousePressed(MouseEvent e){
+                    MineTile tile = (MineTile) e.getSource();
+                    //left click
+                    if(e.getButton() == MouseEvent.BUTTON1){
+                        if(tile.getText() == ""){
+                            if(mineList.contains(tile)){
+                                revealMines();
+                            }
+                        }
+                    }
+                }
+                });
+                
                 boardPanel.add(tile);
             }
+        }
+        frame.setVisible(true);
+        setMines();
+    }
+    void setMines(){
+        mineList = new ArrayList<MineTile>();
+        mineList.add(board[2][2]);
+        mineList.add(board[2][3]);
+        mineList.add(board[5][6]);
+        mineList.add(board[3][4]);
+        mineList.add(board[1][1]);
+    }
+    void revealMines(){
+        for(int i = 0; i < mineList.size(); i++){
+            MineTile tile = mineList.get(i);
+            tile.setText("💣");
         }
     }
 }
