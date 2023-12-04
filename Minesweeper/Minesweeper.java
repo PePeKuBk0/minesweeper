@@ -10,6 +10,16 @@ import javax.swing.*;
  * @version (a version number or a date)
  */
 public class Minesweeper {
+    private class MineTile extends JButton{
+        int r;
+        int s;
+        
+        public MineTile(int r, int s){
+            this.r = r;
+            this.s = s;
+        }
+    }
+    
     int tileSize = 70;
     int pocetRiadkov = 8;
     int pocetStlpcov = pocetRiadkov;
@@ -19,7 +29,8 @@ public class Minesweeper {
     JFrame  frame =  new JFrame("Minesweeper");
     JLabel textLable = new JLabel();
     JPanel textPanel = new JPanel();
-    
+    JPanel boardPanel = new JPanel();
+    MineTile[][] board = new MineTile [pocetRiadkov][pocetStlpcov];
     Minesweeper(){
         frame.setVisible(true);
         frame.setSize(sirkaPlatna, vyskaPlatna);
@@ -32,6 +43,25 @@ public class Minesweeper {
         textLable.setHorizontalAlignment(JLabel.CENTER);
         textLable.setText("Minesweeper");
         textLable.setOpaque(true);
-        System.out.println("test");
+        
+        textPanel.setLayout(new BorderLayout());
+        textPanel.add(textLable);
+        frame.add(textPanel, BorderLayout.NORTH);
+        
+        boardPanel.setLayout(new GridLayout(pocetRiadkov, pocetStlpcov));
+        // boardPanel.setBackground(Color.gray);
+        frame.add(boardPanel);
+        for(int r = 0; r  < pocetRiadkov; r++){
+            for(int s = 0; s <pocetStlpcov; s++){
+                MineTile tile = new MineTile(r,s);
+                board[r][s] = tile;
+                
+                tile.setFocusable(false);
+                tile.setMargin(new Insets(0,0,0,0));
+                tile.setFont(new Font("Ariel Unicode MS", Font.PLAIN, 45));
+                tile.setText("1");
+                boardPanel.add(tile);
+            }
+        }
     }
 }
