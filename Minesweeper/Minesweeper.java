@@ -32,5 +32,6 @@ public class Minesweeper {
         textLable.setHorizontalAlignment(JLabel.CENTER);
         textLable.setText("Minesweeper");
         textLable.setOpaque(true);
+        System.out.println("test");
     }
 }
