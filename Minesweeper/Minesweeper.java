@@ -71,6 +71,9 @@ public class Minesweeper {
                             if(mineList.contains(tile)){
                                 revealMines();
                             }
+                            else{
+                                checkMine(tile.r, tile.s);
+                            }
                         }
                     }
                 }
@@ -95,5 +98,49 @@ public class Minesweeper {
             MineTile tile = mineList.get(i);
             tile.setText("💣");
         }
+    }
+    void checkMine(int r, int s){
+        if(r < 0 || r >= pocetRiadkov || s < 0 || s >= pocetStlpcov){
+            return;
+        } 
+        MineTile tile = board[r][s];
+        if(!tile.isEnabled()){
+            return;
+        }
+        tile.setEnabled(false);
+        int minesFound = 0;
+        
+        minesFound += countMines(r-1, s-1); //top left
+        minesFound += countMines(r-1, s); //top
+        minesFound += countMines(r-1, s+1); //top right
+        minesFound += countMines(r, s-1); //left
+        minesFound += countMines(r, s+1); //right
+        minesFound += countMines(r+1, s-1); //bottom left
+        minesFound += countMines(r+1, s); // bottom 
+        minesFound += countMines(r+1, s+1); //bottom right
+        
+        if(minesFound > 0){
+            tile.setText(Integer.toString(minesFound));
+        }else{
+            tile.setText("");
+            checkMine(r-1, s-1);
+            checkMine(r-1, s);
+            checkMine(r-1, s+1);
+            checkMine(r, s-1);
+            checkMine(r, s+1);
+            checkMine(r+1, s-1);
+            checkMine(r+1, s);
+            checkMine(r+1, s+1);
+            
+        }
+    }
+    int countMines(int r, int s){
+        if(r < 0 || r >= pocetRiadkov || s < 0 || s >= pocetStlpcov){
+            return 0;
+        } 
+        if(mineList.contains(board[r][s])){
+            return 1;
+        }
+        return 0;
     }
 }
