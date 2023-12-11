@@ -7,12 +7,17 @@ import javax.swing.*;
  * Write a description of class Minesweeper here.
  * 
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @author (your name) 
  * @version (a version number or a date)
 =======
  * @author Jakub, Tomas, Marek, Fredo
  * @version 0.32
 >>>>>>> GitHub/Tomas
+=======
+ * @author (your name) 
+ * @version (a version number or a date)
+>>>>>>> Jakub
  */
 public class Minesweeper {
     private class MineTile extends JButton{

@@ -6,8 +6,8 @@ import javax.swing.*;
 /**
  * Write a description of class Minesweeper here.
  * 
- * @author Jakub, Tomas, Marek, Fredo
- * @version 0.32
+ * @author (your name) 
+ * @version (a version number or a date)
  */
 public class Minesweeper {
     private class MineTile extends JButton{
