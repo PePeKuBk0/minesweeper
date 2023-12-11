@@ -6,13 +6,8 @@ import javax.swing.*;
 /**
  * Write a description of class Minesweeper here.
  * 
-<<<<<<< HEAD
- * @author (your name) 
- * @version (a version number or a date)
-=======
  * @author Jakub, Tomas, Marek, Fredo
  * @version 0.32
->>>>>>> GitHub/Tomas
  */
 public class Minesweeper {
     private class MineTile extends JButton{
@@ -70,7 +65,7 @@ public class Minesweeper {
                 tile.setFocusable(false);
                 tile.setMargin(new Insets(0,0,0,0));
                 tile.setFont(new Font("Ariel Unicode MS", Font.PLAIN, 45));
-                // tile.setText("💣");
+                // tile.setText("??");
                 tile.addMouseListener(new MouseAdapter(){
                 @Override
                 public void mousePressed(MouseEvent e){
@@ -91,8 +86,8 @@ public class Minesweeper {
                         //right click
                     } else if(e.getButton() == MouseEvent.BUTTON3){
                         if(tile.getText() == "" && tile.isEnabled()){
-                            tile.setText("🚩");
-                        }else if(tile.getText() == "🚩"){
+                            tile.setText("??");
+                        }else if(tile.getText() == "??"){
                             tile.setText("");
                         }
                     }
@@ -122,7 +117,7 @@ public class Minesweeper {
     void revealMines(){
         for(int i = 0; i < mineList.size(); i++){
             MineTile tile = mineList.get(i);
-            tile.setText("💣");
+            tile.setText("??");
         }
         gameOver = true;
         textLable.setText("Game Over!");
