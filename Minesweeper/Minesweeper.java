@@ -12,8 +12,7 @@ import javax.swing.*;
 public class Minesweeper {
     private class MineTile extends JButton{
         int r;
-        int s;
-        
+        int s;  
         public MineTile(int r, int s){
             this.r = r;
             this.s = s;
@@ -30,8 +29,14 @@ public class Minesweeper {
     JLabel textLable = new JLabel();
     JPanel textPanel = new JPanel();
     JPanel boardPanel = new JPanel();
+    
+    int mineCount = 10;
     MineTile[][] board = new MineTile [pocetRiadkov][pocetStlpcov];
     ArrayList<MineTile> mineList;
+    Random random = new Random();
+    
+    int tilesClicked = 0;
+    boolean gameOver = false;
     Minesweeper(){
         // frame.setVisible(true);
         frame.setSize(sirkaPlatna, vyskaPlatna);
@@ -64,6 +69,9 @@ public class Minesweeper {
                 tile.addMouseListener(new MouseAdapter(){
                 @Override
                 public void mousePressed(MouseEvent e){
+                    if(gameOver){
+                        return;
+                    }
                     MineTile tile = (MineTile) e.getSource();
                     //left click
                     if(e.getButton() == MouseEvent.BUTTON1){
@@ -74,6 +82,13 @@ public class Minesweeper {
                             else{
                                 checkMine(tile.r, tile.s);
                             }
+                        }
+                        //right click
+                    } else if(e.getButton() == MouseEvent.BUTTON3){
+                        if(tile.getText() == "" && tile.isEnabled()){
+                            tile.setText("🚩");
+                        }else if(tile.getText() == "🚩"){
+                            tile.setText("");
                         }
                     }
                 }
@@ -87,17 +102,25 @@ public class Minesweeper {
     }
     void setMines(){
         mineList = new ArrayList<MineTile>();
-        mineList.add(board[2][2]);
-        mineList.add(board[2][3]);
-        mineList.add(board[5][6]);
-        mineList.add(board[3][4]);
-        mineList.add(board[1][1]);
+        int mineLeft = mineCount;
+        while(mineLeft > 0){
+            int r = random.nextInt(pocetRiadkov);
+            int s = random.nextInt(pocetStlpcov);
+            
+            MineTile tile = board[r][s];
+            if(!mineList.contains(tile)){
+                mineList.add(tile);
+                mineLeft -=1;
+            }
+        }
     }
     void revealMines(){
         for(int i = 0; i < mineList.size(); i++){
             MineTile tile = mineList.get(i);
             tile.setText("💣");
         }
+        gameOver = true;
+        textLable.setText("Game Over!");
     }
     void checkMine(int r, int s){
         if(r < 0 || r >= pocetRiadkov || s < 0 || s >= pocetStlpcov){
@@ -108,6 +131,7 @@ public class Minesweeper {
             return;
         }
         tile.setEnabled(false);
+        tilesClicked += 1;
         int minesFound = 0;
         
         minesFound += countMines(r-1, s-1); //top left
@@ -132,6 +156,10 @@ public class Minesweeper {
             checkMine(r+1, s);
             checkMine(r+1, s+1);
             
+        }
+        if(tilesClicked == pocetStlpcov * pocetRiadkov - mineList.size()){
+            gameOver = true;
+            textLable.setText("U WON!");
         }
     }
     int countMines(int r, int s){
