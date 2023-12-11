@@ -1,4 +1,7 @@
 #BlueJ package file
+dependency1.from=App
+dependency1.to=Minesweeper
+dependency1.type=UsesDependency
 editor.fx.0.height=739
 editor.fx.0.width=816
 editor.fx.0.x=58
@@ -13,7 +16,7 @@ package.editor.x=309
 package.editor.y=37
 package.frame.height=600
 package.frame.width=800
-package.numDependencies=0
+package.numDependencies=1
 package.numTargets=2
 package.showExtends=true
 package.showUses=true
